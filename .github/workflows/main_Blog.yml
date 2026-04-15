@@ -47,20 +47,9 @@ jobs:
       # 2. Refer to sample workflows for alternative deployment strategies: https://github.com/Azure/actions-workflow-samples/tree/master/AppService
       
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: python-app
-      
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
-        with:
-          app-name: 'Blog'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.__publishingprofilesecretname__ }}
+  - name: 'Deploy to Azure Web App'
+  uses: azure/webapps-deploy@v3
+  id: deploy-to-webapp
+  with:
+    app-name: 'Blog'
+    publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
